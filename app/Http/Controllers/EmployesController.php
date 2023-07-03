@@ -18,7 +18,6 @@ class EmployesController extends Controller
     }
 
     public function store(EmployeeStoreRequest $request, Geocoder $geocoder){
-
         $address = $geocoder->geocode($request->address)->get();
         $coordinates = $address->first()->getCoordinates();
         $lat = $coordinates->getLatitude();
@@ -39,11 +38,15 @@ class EmployesController extends Controller
         $skillsDB = Skill::get();
         foreach ($request->skills as $skill){
 
-            EmployeeSkill::create([
-                'employee_id' => $employee->id,
-                'skill_id' => $skillsDB->where('name', $skill)->first()->id,
-            'value' => (count($values) && isset($values[$skill])) ? $values[$skill] : 1,
-            ]);
+            $currentSkill = $skillsDB->where('name', $skill)->first();
+            if($currentSkill){
+                EmployeeSkill::create([
+                    'employee_id' => $employee->id,
+                    'skill_id' => $currentSkill->id,
+                    'value' => (count($values) && isset($values[$skill])) ? $values[$skill] : 1,
+                ]);
+            }
+
 
         }
 

@@ -169,10 +169,12 @@
             onSubmit(evt) {
                 this.onCheckForm();
 
+                let format = this.form.date.split('-');
+                let formatDate = `${format[2]}/${format[1]}/${format[0]}`;
                 axios.post('http://127.0.0.1:8000/api/employees', {
                     name: this.form.name,
                     email: this.form.email,
-                    date: this.form.date,
+                    date: formatDate,
                     skills: this.form.skills,
                     address: this.form.address,
                     job: this.form.job,

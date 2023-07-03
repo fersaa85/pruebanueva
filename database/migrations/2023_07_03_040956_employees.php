@@ -18,7 +18,7 @@ class Employees extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('address');
-            $table->date('date');
+            $table->string('date');
             $table->string('job');
             //$table->boolean('checked');
             $table->string('lat');
